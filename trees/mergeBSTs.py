@@ -1,8 +1,5 @@
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+from TreeNode import TreeNode
+
 class Solution:
     def mergeTrees(self, root1: TreeNode, root2: TreeNode) -> TreeNode:
         if not root1:
