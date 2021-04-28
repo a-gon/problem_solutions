@@ -8,16 +8,14 @@ class Solution:
             return
         if row[right] > 0:
             return
-        while left <= right:
-            mid = (left + right) // 2
+        while left < right:
+            mid = left + (right - left) // 2
             if row[mid] < 0:
-                self.result += (right - mid + 1)
-                right = mid-1
-            elif row[left] < 0:
-                self.result += (mid - left + 1)
-            elif row[mid] >= 0:
-                left = mid + 1
-        return
+                right = mid
+            else:
+                left = mid+1
+        self.result += (len(row) - left)
+        return 
     
     
     
@@ -31,5 +29,6 @@ class Solution:
 
 solve = Solution()
 grid = [[4,3,2,-1],[3,2,1,-1],[1,1,-1,-2],[-1,-1,-2,-3]]
+# grid= [[3,-1],[2,1]]
 print(f'Negative numbers in grid: {solve.countNegatives(grid)}')
 # output: 8
