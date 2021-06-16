@@ -108,3 +108,64 @@ print("Reverse linked list")
 print(arrayify(reverseLL(ListNode(1)))) # [1]
 print(arrayify(reverseLL(ListNode(1, ListNode(2))))) # [2, 1]
 print(arrayify(reverseLL(LL1))) # [10, 7, 3, 5, 1, 13]
+
+
+def removeDupes(head):
+    if not head:
+        return None
+    p1 = head
+    while p1:
+        p2 = p1.next
+        while p2 and p1.value == p2.value:
+            p2 = p2.next
+        p1.next = p2
+        p1 = p1.next       
+    
+    return head
+
+'''
+- in the front
+- in the middle
+- in the end
+
+1 2 3 4   >> 1 2 3 4
+    ^  ^
+1 2 3 3 3 4 5.  >> 1 2 3 4 5
+'''
+print('Remove duplicates from linked list - iterative')
+
+list1 = ListNode(1, ListNode(1, ListNode(2)))
+list2 = ListNode(1, ListNode(1, ListNode(1)))
+list3 = ListNode(1, ListNode(1, ListNode(2, ListNode(3, ListNode(3)))))
+list4 = ListNode(1, ListNode(1, ListNode(2, ListNode(2, ListNode(3, ListNode(3, ListNode(4)))))))
+
+print(arrayify(removeDupes(list1)), " - expected [1, 2]")
+print(arrayify(removeDupes(list2)), " - expected [1]")
+print(arrayify(removeDupes(list3)), " - expected [1, 2, 3]")
+print(arrayify(removeDupes(list4)), " - expected [1, 2, 3, 4]")
+
+
+
+def removeEveryKth(head: ListNode, k) -> ListNode:
+    if not head:
+        return None
+    cur = head
+    prev = head
+    counter = 0
+    while cur:
+        counter += 1
+        if counter == k:
+            prev.next = cur.next
+            counter = 0
+        if 0 < counter < k:
+            prev = cur
+        cur = prev.next
+        
+    return head
+
+# Test Cases
+print('Remove ebery kth element, k >= 2')
+LL1 = ListNode(1, ListNode(1, ListNode(2, ListNode(3, ListNode(5, ListNode(8, ListNode(13)))))))
+LL2 = ListNode(1, ListNode(2))
+print(arrayify(removeEveryKth(LL1, 3)), 'expected [1, 1, 3, 5, 13]')
+print(arrayify(removeEveryKth(LL2, 2)), 'expected [1]')
