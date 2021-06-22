@@ -53,8 +53,10 @@ def findMiddle(head: ListNode) -> int:
         return None
     slow = fast = head
     while fast and fast.next:
-        slow = slow.next
+        
         fast = fast.next.next
+        if fast:
+            slow = slow.next   # return node 1 if len(list == 2)
     return slow.value
 
 # Test Cases
@@ -68,17 +70,22 @@ print(findMiddle(ListNode(1))) # 1
 
 
 def findKthFromLast(head: ListNode, k: int) -> int:
-    """ Find kthe element from the end """ 
-    if not head:
-        return None
-    slow = fast = head
-    while fast and k > 0:
+    """ Find kth element from the end """ 
+    if not head or k < 0:
+        return -1
+    slow = head
+    fast = head
+    i = 0
+
+    while fast and i < k:    # will reach end of list first or increment fast k times
         fast = fast.next
-        k -= 1
+        i += 1
+    
     while fast:
-        fast = fast.next
         slow = slow.next
-    return slow.value if k == 0 else -1   # if k is larger than the len(list), return -1
+        fast = fast.next
+    
+    return slow.value if i == k else -1   # if k > len(list) then return -1
 
 # Test Cases
 LL1 = ListNode(13, ListNode(1, ListNode(5, ListNode(3, ListNode(7, ListNode(10))))))
@@ -169,3 +176,24 @@ LL1 = ListNode(1, ListNode(1, ListNode(2, ListNode(3, ListNode(5, ListNode(8, Li
 LL2 = ListNode(1, ListNode(2))
 print(arrayify(removeEveryKth(LL1, 3)), 'expected [1, 1, 3, 5, 13]')
 print(arrayify(removeEveryKth(LL2, 2)), 'expected [1]')
+
+
+
+def insert(self, value):
+    node = self
+    head = self
+
+    if value < node.value:
+        newHead = Node(value)
+        newHead.next = node
+        return newHead
+
+    while node:
+        if not node.next or value < node.next.value:
+            next = node.next
+            node.next = Node(value)
+            node.next.next = next
+            break
+        node = node.next
+
+    return head

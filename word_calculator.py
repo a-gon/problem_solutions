@@ -50,6 +50,6 @@ class Calculator:
 
 
 
-input = 'two times three plus ten divided by five minus one'
+input = 'two minus two minus one'
 calc = Calculator()
 print(f'{input} \nEvaluates to {calc.calculate(calc.parse(input))}')

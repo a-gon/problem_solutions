@@ -165,3 +165,56 @@ print(binarySearch(array, 1)) # 0
 print(binarySearch(array, 200)) # 8
 print(binarySearch(array, 8)) # 4
 print(binarySearch(array, 154)) # -1
+
+
+def findMostDuplicated(array):
+    ''' Find most duplicated element in array, several elements have same number of duplicates, return the smallest element among these'''
+    counts = {}
+    most_dup = (-1, -1)
+    for i in array:
+        new_count = counts.get(i, 0) + 1
+        if new_count > most_dup[1] or (new_count == most_dup[1] and i < most_dup[0]):
+            most_dup = (i, new_count)
+        counts[i] = new_count
+    
+    
+    return most_dup[0]
+
+print('Find most duplicated element in array:')
+print(findMostDuplicated([1]), 'expected 1')
+print(findMostDuplicated([1, 1, 1]), 'expected 1')
+print(findMostDuplicated([1, 2, 2, 1, 2, 3, 2, 1]), 'expected 2')
+print(findMostDuplicated([3, 2, 1, 3]), 'expected 3')
+print(findMostDuplicated([3, 2, 1, 3, 1, 2]), 'expected 1')
+print(findMostDuplicated([3, 10, 11, 5, 3, 10]), 'expected 3')
+
+
+def binarySearch(array: [int], target: int) -> int:
+    ''' Binary search variation: if value not in array, return the value closest to target '''
+    lo = 0
+    hi = len(array) - 1
+    diff = float('inf')
+    closest = -1
+    
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if array[mid] == target:
+            return mid
+        elif target < array[mid]:
+            hi = mid - 1
+        else:
+            lo = mid + 1
+        
+        if abs(target - array[mid]) < diff:
+            diff = abs(target - array[mid])
+            closest = mid
+    
+    return closest
+
+# Test Cases
+array = [1, 2, 2, 2, 3, 6, 8]
+
+print(binarySearch(array, 4), 'expected 4') # array[4] = 3 is closest to 4
+print(binarySearch(array, 200), 'expected 8') # 8
+print(binarySearch(array, 8), 'expected 4') # 4
+print(binarySearch(array, 154), 'ecpected 8') # -1

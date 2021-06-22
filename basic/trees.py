@@ -78,6 +78,7 @@ print(sumBTRecursive(TreeNode(1))) # 1
 
 
 def findMaxBT(root: TreeNode):
+    ''' Find max value in binary tree '''
     if not root:
         return None
     max_val = root.value
@@ -86,7 +87,6 @@ def findMaxBT(root: TreeNode):
     if root.right:
         max_val = max(max_val, findMaxBT(root.right))
         
-    
     return max_val
 
 # Test Cases
@@ -95,7 +95,6 @@ print(findMaxBT(None)) # None
 print(findMaxBT(TreeNode(1, TreeNode(2), TreeNode(3)))) # 3
 print(findMaxBT(TreeNode(2, TreeNode(29, TreeNode(26)), TreeNode(4, None, TreeNode(2, TreeNode(9)))))) # 29
 print(findMaxBT(TreeNode(1))) # 1
-
 
 class TreeNode:
     def __init__(self, value = 0, left = None, right = None):
@@ -140,7 +139,7 @@ def searchBTDFS(root: TreeNode, target: int) -> bool:
     #     if cur.right:
     #         stack.append(cur.right)
     # return False
-
+    """ DFS recursively """
     if not root:
         return False
     if root.value == target:
@@ -148,7 +147,20 @@ def searchBTDFS(root: TreeNode, target: int) -> bool:
     return searchBTDFS(root.left, target) or searchBTDFS(root.right, target)
 
 
-    
+ def printTreeInOrder(root):
+     queue = []
+     output = []
+     cur = root
+     while queue or cur:
+        if root:
+            queue.append(cur)
+            cur = cur left
+        else:
+            node = queue.pop()
+            output.append(node.value)
+            node = node.right
+    return output
+
         
 
 # Test Cases
@@ -173,7 +185,6 @@ def helper(node, min, max):
         
 def validateBST(root):
     return helper(root, -float('inf'), float('inf'))
-
 
 
 ''' 
@@ -211,3 +222,41 @@ print(validateBST(tree1), 'True') # True
 print(validateBST(tree2), 'False') # False
 print(validateBST(tree3), 'True') # True
 print(validateBST(TreeNode()), 'True') # True
+
+
+def levelOrderTraversal(root):
+    ''' Print binary tree level by level'''
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        level = []
+        for i in range(len(queue)): # pop only the current level (evaluates queue length only once in the beginning)
+            node = queue.pop(0)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+            level.append(node.value)
+        result.append(level)
+    return result
+
+
+
+
+    def bfs(node, target):
+    queue = [node]
+    
+    while queue:
+        curr = queue.pop(0)
+        if curr.value == target:
+            return True
+        if curr.left:
+            queue.append(curr.left)
+        if curr.right:
+            queue.append(curr.right)
+        
+    return False
+
+def findMaxBT
