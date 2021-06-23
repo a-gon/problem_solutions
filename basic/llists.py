@@ -197,3 +197,78 @@ def insert(self, value):
         node = node.next
 
     return head
+
+
+
+def insertZeros(head):
+    ''' insert a zero  after each node '''
+    if not head:
+        return None
+    cur = head
+    while cur:
+        next_node = cur.next
+        cur.next = ListNode(0, next_node)
+        
+        cur = next_node
+        
+    return head
+
+
+l1 = ListNode(1, ListNode(2, ListNode(3, ListNode(4))))
+l2 = ListNode(1)
+print(arrayify(insertZeros(l1)), 'expected [1,0,2,0,3,4,0]')
+print(arrayify(insertZeros(l2)), 'expected [1,0]')
+print(arrayify(insertZeros(None)), 'expected []')
+
+
+def limitElements(head, k):
+    ''' Given a linked list, limit the number of repetitions of each element to k. '''
+    if not head:
+        return None
+    counts = {}
+    sent = ListNode(0, head)
+    cur = sent
+    while cur and cur.next:
+        num = cur.next.value
+        new_count = counts.get(num, 0) + 1
+        
+        if new_count > k:
+            cur.next = cur.next.next
+            
+        cur = cur.next
+        counts[num] = new_count
+        
+        
+    return head
+    
+    
+l1 = ListNode(1, ListNode(2, ListNode(2, ListNode(3))))
+l2 = ListNode(1, ListNode(2, ListNode(2, ListNode(2, ListNode(3)))))
+
+
+print(arrayify(limitElements(l1, 1)), 'expected [1,2,3]')
+print(arrayify(limitElements(l2, 2)), 'expected [1,2,2,3]')
+
+
+
+def removeNodesWithOddsLL(head, k):
+    ''' Remove all nodes with odd values '''
+    if not head:
+        return None
+    sent = ListNode(0, head)
+    cur = sent
+    while cur and cur.next:
+        if cur.next.value % 2 == 1:
+            cur.next = cur.next.next
+        cur = cur.next
+        
+    return sent.next
+    
+    
+
+l1 = ListNode(1, ListNode(2, ListNode(2, ListNode(3))))
+l2 = ListNode(1, ListNode(2, ListNode(9, ListNode(6, ListNode(3)))))
+
+
+print(arrayify(removeNodesWithOddsLL(l1, 1)), 'expected [2,2]')
+print(arrayify(removeNodesWithOddsLL(l2, 2)), 'expected [2,6]')
