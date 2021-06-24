@@ -11,3 +11,28 @@ def kadanesAlgorithm(array):
 		cur_sum = max(cur_sum + num, num)
 		max_sum = max(max_sum, cur_sum)
 	return max_sum
+
+
+def sortColors(nums):
+    """
+    Given ar array of 0s, 1s and 2s, group them all in ascending order
+    """
+    left = 0            # right boundary of zeros
+    right = len(nums) - 1   # left boundary of twos
+    cur = 0                 # current element
+    while cur <= right:
+        if nums[cur] == 0:
+            nums[cur], nums[left] = nums[left], nums[cur]
+            left += 1
+            cur += 1
+        elif nums[cur] == 2:
+            nums[cur], nums[right] = nums[right], nums[cur]
+            right -= 1
+        else:
+            cur += 1
+    return nums
+
+    """
+    Input: nums = [2,0,2,1,1,0]
+    Output: [0,0,1,1,2,2]
+    """
