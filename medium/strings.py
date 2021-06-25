@@ -28,3 +28,21 @@ def isPalindromeIter(s):
 print(isPalindromeIter('anna'), 'expected True')
 print(isPalindromeIter('malayalam'), 'expected True')
 print(isPalindromeIter('malayakam'), 'expected False')
+
+
+def groupAnagrams(words):
+    'Giver a list of strings, return a list of grouped anagrams (strings that have the same characters regardless of order)'
+    ref = {}
+    for word in words:
+        sorted_word = ''.join(sorted(word ))
+        if sorted_word in ref:
+            ref[sorted_word].append(word)
+        else:
+            ref[sorted_word] = [word]
+    return list(ref.values())
+
+    words =  ["yoo", "act", "bar", "tac", "foo", "cat", "oyo", "arb"]
+    print(groupAnagrams(words))
+    words = ['act']
+    print(groupAnagrams(words))
+    
