@@ -41,8 +41,8 @@ def groupAnagrams(words):
             ref[sorted_word] = [word]
     return list(ref.values())
 
-    words =  ["yoo", "act", "bar", "tac", "foo", "cat", "oyo", "arb"]
-    print(groupAnagrams(words))
-    words = ['act']
-    print(groupAnagrams(words))
+words =  ["yoo", "act", "bar", "tac", "foo", "cat", "oyo", "arb"]
+print(groupAnagrams(words))
+words = ['act']
+print(groupAnagrams(words))
     
