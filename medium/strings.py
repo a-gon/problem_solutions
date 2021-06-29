@@ -46,3 +46,35 @@ print(groupAnagrams(words))
 words = ['act']
 print(groupAnagrams(words))
     
+
+
+
+def strStr(self, haystack: str, needle: str) -> int:
+    '''
+    Find a needle in a haystack or strstr.
+    Return the index of the first occurence of needle string within the haystack string
+
+    hello   ll
+        ^
+        ^
+        return i pointer 
+
+        cases:
+        needle found -> return index of first letter
+        empty needle -> return 0
+        needle not found -> return -1
+    
+    '''
+    if not needle:
+        return 0
+    for i in range(len(haystack) - len(needle) + 1):
+        for j in range(len(needle)):
+            if haystack[i + j] != needle[j]:
+                break
+            if j == len(needle) - 1:            # if reached the end of needle
+                return i
+            
+    return -1
+
+
+
