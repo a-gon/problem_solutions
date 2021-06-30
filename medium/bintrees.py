@@ -70,5 +70,112 @@ tree1 = TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(3, TreeNode(
 print(levelOrder(tree1), 'expected [[1], [2, 3], [4, 5, 6, 7]]')
 print(levelOrder_recur(tree1), 'expected [[1], [2, 3], [4, 5, 6, 7]]')
 
+def maxLevelSum(root):
+    if not root:
+        return None
+    queue = deque([root,])
+    max_sum = -float('inf')
+    while queue:
+        level_sum = 0
+        for i in range(len(queue)):
+            node = queue.popleft()
+            level_sum += node.value
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        max_sum = max(max_sum, level_sum)
+    return max_sum
+tree1 = TreeNode(1, TreeNode(20, TreeNode(4), TreeNode(5)), TreeNode(13, TreeNode(6), TreeNode(7)))
+
+print(maxLevelSum(tree1), 'expect 33')
+print(maxLevelSum(None), 'expect None')
+print(maxLevelSum(TreeNode(1)), 'expect 1')
+
+def isSymmetric(root):
+    
+    def helper(root1, root2):
+        if not root1 and not root2:
+            return True
+        if not root1 or not root2:
+            return False
+
+        return (root1.value == root2.value) and helper(root1.left, root2.right) and helper(root1.right, root2.left)
         
+    if not root:
+        return True
+
+    return helper(root.left, root.right)
+
+print('Checking if tree is symmetric: ')
+tree1 = TreeNode(1, TreeNode(20, TreeNode(4), TreeNode(5)), TreeNode(13, TreeNode(6), TreeNode(-1)))
+print(isSymmetric(tree1), 'expected False')
+tree1 = TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(2, TreeNode(5), TreeNode(4)))
+print(isSymmetric(tree1), 'expected True')
+
+
+
+def findMin(root):
+    if not root:
+        return float('inf')
+    cur_min = root.value
+    min_left = min(cur_min, findMin(root.left))
+    min_right = min(cur_min, findMin(root.right))
+
+    return min(cur_min, min_left, min_right)
+
+tree1 = TreeNode(1, TreeNode(20, TreeNode(4), TreeNode(5)), TreeNode(13, TreeNode(6), TreeNode(-1)))
+
+print(findMin(tree1))
+
+
+def findAvgEachLevel(root):
+    if not root:
+        return None
+    queue = deque([root,])
+    result = []
+    while queue:
+        level = []
+        for i in range(len(queue)):
+            node = queue.popleft()
+            level.append(node.value)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.append(sum(level) / len(level))
+    return result
+
+tree1 = TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(3, TreeNode(6), TreeNode(7)))
+print(findAvgEachLevel(tree1))
+
+def countEvenNodes(root):
+    if not root:
+        return 0
+    
+    return (root.value % 2 == 0) + countEvenNodes(root.left) + countEvenNodes(root.right)
+
+tree1 = TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(3, TreeNode(6), TreeNode(7)))
+print(countEvenNodes(tree1), 'expected 3')
+
+
+def rightLeafSum(root):
+    if not root:
+        return 0
+    cur_sum = 0
+    if root.right and not root.right.left and not root.right.right:
+        cur_sum += root.right.value
+        return cur_sum
+
+    return cur_sum + rightLeafSum(root.left) + rightLeafSum(root.right)
+
+tree1 = TreeNode(1, TreeNode(2, None, TreeNode(5)), TreeNode(3, None, TreeNode(7)))
+print(rightLeafSum(tree1), 'expected 12')
+tree1 = TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5, None, TreeNode(7))), TreeNode(3, TreeNode(6), TreeNode(7)))
+print(rightLeafSum(tree1), 'expected 14')
+print(rightLeafSum(None), 'expected 0')
+
+
+
+
 
