@@ -147,18 +147,19 @@ def searchBTDFS(root: TreeNode, target: int) -> bool:
     return searchBTDFS(root.left, target) or searchBTDFS(root.right, target)
 
 
- def printTreeInOrder(root):
-     queue = []
-     output = []
-     cur = root
-     while queue or cur:
+def printTreeInOrder(root):
+    queue = []
+    output = []
+    cur = root
+    while queue or cur:
         if root:
             queue.append(cur)
-            cur = cur left
+            cur = cur.left
         else:
             node = queue.pop()
             output.append(node.value)
             node = node.right
+
     return output
 
         
@@ -245,9 +246,9 @@ def levelOrderTraversal(root):
 
 
 
-    def bfs(node, target):
+def bfs(node, target):
     queue = [node]
-    
+
     while queue:
         curr = queue.pop(0)
         if curr.value == target:
@@ -259,4 +260,26 @@ def levelOrderTraversal(root):
         
     return False
 
-def findMaxBT
+
+def sortedArrayToBST(nums):
+    if not nums:
+        return None
+    def helper(nums, left, right):
+        if left - right == 1:
+            return None
+        mid = (left + right) // 2
+        cur_node = TreeNode(nums[mid])
+        cur_node.left = helper(nums, left, mid - 1)
+        cur_node.right = helper(nums, mid + 1, right)
+
+        return cur_node
+
+    return helper(nums, 0, len(nums) - 1)
+
+
+nums = [-10,-3, -1,0, 1, 5,9]
+print('Converting array into BST')
+print(levelOrderTraversal(sortedArrayToBST(nums)))
+nums = [1, 3]
+print(levelOrderTraversal(sortedArrayToBST(nums)))
+
