@@ -41,6 +41,7 @@ def groupAnagrams(words):
             ref[sorted_word] = [word]
     return list(ref.values())
 
+print('---Group anagrams---')
 words =  ["yoo", "act", "bar", "tac", "foo", "cat", "oyo", "arb"]
 print(groupAnagrams(words))
 words = ['act']
@@ -76,5 +77,29 @@ def strStr(self, haystack: str, needle: str) -> int:
             
     return -1
 
+def reverseWordsInString(s):
+    pass
 
+def lengthOfLongestSubstring(s):
+    if not s:
+        return 0
+    max_substr = 1
+    left = 0
+    chars = set()
+    for right in range(len(s)):
+        while s[right] in chars:
+            chars.discard(s[left])
+            left += 1
+        chars.add(s[right])
+        max_substr = max(max_substr, right - left + 1)
+
+    return max_substr
+
+print('---Length of longest substring without repeating characters---')
+s = "abcabcbb"
+print(lengthOfLongestSubstring(s), 'expected 3')
+s = "bbbb"
+print(lengthOfLongestSubstring(s), 'expected 1')
+s = ""
+print(lengthOfLongestSubstring(s), 'expected 0')
 
