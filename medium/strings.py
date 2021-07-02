@@ -78,7 +78,11 @@ def strStr(self, haystack: str, needle: str) -> int:
     return -1
 
 def reverseWordsInString(s):
-    pass
+    return ' '.join(reversed(s.split()))
+
+print('---Reversing words in string---')
+print(reverseWordsInString('it is a beautiful day'), 'expected: day beautiful a is it')
+print(reverseWordsInString(' i'))
 
 def lengthOfLongestSubstring(s):
     if not s:
