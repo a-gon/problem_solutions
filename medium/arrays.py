@@ -16,6 +16,7 @@ def kadanesAlgorithm(array):
 def sortColors(nums):
     """
     Given ar array of 0s, 1s and 2s, group them all in ascending order
+    AKA Dutch national flag problem
     """
     left = 0            # right boundary of zeros
     right = len(nums) - 1   # left boundary of twos
