@@ -152,26 +152,24 @@ print(arrayify(removeDupes(list3)), " - expected [1, 2, 3]")
 print(arrayify(removeDupes(list4)), " - expected [1, 2, 3, 4]")
 
 
-
 def removeEveryKth(head: ListNode, k) -> ListNode:
     if not head:
         return None
     cur = head
-    prev = head
-    counter = 0
-    while cur:
+    # prev = head
+    counter = 1
+    while cur and cur.next:
         counter += 1
         if counter == k:
-            prev.next = cur.next
+            cur.next = cur.next.next
             counter = 0
-        if 0 < counter < k:
-            prev = cur
-        cur = prev.next
+        else:
+            cur = cur.next
         
     return head
 
 # Test Cases
-print('Remove ebery kth element, k >= 2')
+print('---Remove ebery kth element, k >= 2---')
 LL1 = ListNode(1, ListNode(1, ListNode(2, ListNode(3, ListNode(5, ListNode(8, ListNode(13)))))))
 LL2 = ListNode(1, ListNode(2))
 print(arrayify(removeEveryKth(LL1, 3)), 'expected [1, 1, 3, 5, 13]')
@@ -179,25 +177,21 @@ print(arrayify(removeEveryKth(LL2, 2)), 'expected [1]')
 
 
 
-def insert(self, value):
-    node = self
-    head = self
-
-    if value < node.value:
-        newHead = Node(value)
-        newHead.next = node
-        return newHead
-
-    while node:
-        if not node.next or value < node.next.value:
-            next = node.next
-            node.next = Node(value)
-            node.next.next = next
-            break
-        node = node.next
+def insert(head, value):
+    if not head or value < head.value:
+        new_head = ListNode(value, head)
+        return new_head
+    cur = head
+    while cur and cur.next and value > cur.next.value:
+        cur = cur.next
+    new_node = ListNode(value)
+    new_node.next = cur.next
+    cur.next = new_node
 
     return head
-
+LL1 = ListNode(1, ListNode(1, ListNode(2, ListNode(3, ListNode(5, ListNode(8, ListNode(13)))))))
+print('---Insert value into linked list---')
+print(arrayify(insert(LL1, 6)))
 
 
 def insertZeros(head):
