@@ -177,5 +177,37 @@ print(rightLeafSum(None), 'expected 0')
 
 
 
+def inOrderTraversal(root):
+    ''' 
+    Iterative in-order traversal, returns a lst with node values traversed in-order
+    '''
+    if not root:
+        return []
+    result = []
+    stack = []
+    cur = root
 
+    while stack or cur:
+        if cur:
+            stack.append(cur)
+            cur = cur.left
+        else:
+            cur = stack.pop()
+            result.append(cur.value)
+            cur = cur.right
+
+    return result
+
+
+# tree1:
+#          1
+#        /   \
+#       2     3
+#      / \   / \
+#     4   5 6   7
+#    / \
+#   8   9
+tree1 = TreeNode(1, TreeNode(2, TreeNode(4, TreeNode(8), TreeNode(9)), TreeNode(5)), TreeNode(3, TreeNode(6), TreeNode(7)))
+print('---Iterative In-order Traversal---') 
+print(inOrderTraversal(tree1), 'expected: [8, 4, 9, 2, 5, 1, 6, 3, 7]')
 
