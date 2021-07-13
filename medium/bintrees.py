@@ -211,3 +211,80 @@ tree1 = TreeNode(1, TreeNode(2, TreeNode(4, TreeNode(8), TreeNode(9)), TreeNode(
 print('---Iterative In-order Traversal---') 
 print(inOrderTraversal(tree1), 'expected: [8, 4, 9, 2, 5, 1, 6, 3, 7]')
 
+
+
+    
+def lca_tuple(root, node1, node2):
+    if not root:
+        return (None, 0)
+    
+    left = lca_tuple(root.left, node1, node2)
+    right = lca_tuple(root.right, node1, node2)
+    
+    if root is node1 or root is node2:
+        return (root, 1 + left[1] + right[1])
+
+    if left[1] == 1 and right[1] == 1:
+        return (root, 2)
+
+    if left[1] > 0:
+        return left
+    elif right[1] > 0:
+        return right
+    
+    return (None, 0)
+
+def lca_of_3(root, node1, node2, node3):
+    if not root:
+        return (None, 0)
+    
+    left = lca_of_3(root.left, node1, node2, node3)
+    right = lca_of_3(root.right, node1, node2, node3)
+    
+    if root is node1 or root is node2 or root is node3:
+        return (root, 1 + left[1] + right[1])
+
+    if left[1] == 1 and right[1] == 1:
+        return (root, 2)
+
+    if left[1] > 0:
+        return left
+    elif right[1] > 0:
+        return right
+    
+    return (None, 0)
+
+
+
+
+
+"""
+- Given a binary tree: 
+
+                     10
+                    /  \
+                  5     12
+                 / \    /    
+                3   6  11
+"""
+    
+# Test Cases
+tree1 = TreeNode(10, 
+                 TreeNode(5, 
+                          TreeNode(3), 
+                          TreeNode(6)), 
+                 TreeNode(12, 
+                          TreeNode(11), 
+                          TreeNode(13)))
+
+print('---LCA of 2 nodes---\n')
+print(lca_tuple(tree1, tree1.left.left, tree1.left.right)[0].value, 'expect 5')
+print(lca_tuple(tree1, tree1.left, tree1.left.right)[0].value, 'expect 5')
+print(lca_tuple(tree1, tree1.left, tree1.right.left)[0].value, 'expect 10')
+
+
+print('---LCA of 3 nodes---\n')
+# print(lca_3(tree1, tree1.left, tree1.left.right, tree1.left.left))
+print(lca_of_3(tree1, tree1.left.left, tree1.left.right, tree1.right)[0].value, 'expect 10')
+print(lca_of_3(tree1, tree1.left, tree1.left.right, tree1.left.left)[0].value, 'expect 5')
+print(lca_of_3(tree1, tree1.left, tree1.right.left, tree1.right.right)[0].value, 'expect 10')
