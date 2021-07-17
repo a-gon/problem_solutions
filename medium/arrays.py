@@ -1,4 +1,4 @@
-''' Kadane's Algorithm - dynamic programming'''
+''' Kadane's Algorithm'''
 def kadanesAlgorithm(array):
     ''' Finds max sum of a subarray
     "array": [3, 5, -9, 1, 3, -2, 3, 4, 7, 2, -9, 6, 3, 1, -5, 4] 
@@ -6,11 +6,45 @@ def kadanesAlgorithm(array):
     O(n) time, O(1) space
     '''
     cur_sum = array[0]
-	max_sum = cur_sum
-	for num in array[1:]:
-		cur_sum = max(cur_sum + num, num)
-		max_sum = max(max_sum, cur_sum)
-	return max_sum
+    max_sum = cur_sum
+    for num in array[1:]:
+	    cur_sum = max(cur_sum + num, num)
+	    max_sum = max(max_sum, cur_sum)
+    return max_sum
+
+def maxSumSubarray(array):
+    ''' Return the actual subarray containing the max sum'''
+    cur_sum = array[0]
+    max_sum = cur_sum
+    ref = {}
+    cur_subarr = [array[0]]
+    for num in array[1:]:
+        if cur_sum + num > cur_sum:
+            cur_subarr.append(num)
+            cur_sum += num
+
+        else:
+            ref[cur_sum] = cur_subarr
+            cur_sum = num
+            cur_subarr = [num]
+        # ref[cur_sum] = cur_subarr
+        if cur_sum > max_sum:
+            max_sum = cur_sum
+            # ref[max_sum] = cur_subarr
+
+    print(ref)
+    max_subarray = ref[max_sum]
+
+
+    return max_subarray
+
+print(maxSumSubarray([3, 5, -9, 1, 3, -2, 3, 4, 7, 2, -9, 6, 3, 1, -5, 4] ))
+
+
+
+
+
+
 
 
 def sortColors(nums):
