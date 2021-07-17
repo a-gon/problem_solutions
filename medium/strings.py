@@ -107,3 +107,24 @@ print(lengthOfLongestSubstring(s), 'expected 1')
 s = ""
 print(lengthOfLongestSubstring(s), 'expected 0')
 
+def longestSubstringNoDupes(string: str) -> str:
+    ''' Return the substring itself (not its length)'''
+    if len(string) <= 1:
+        return string
+    ref = set()
+    left = 0
+    max_substr = (0, 0)
+    for right in range(len(string)):
+        while string[right] in ref:
+            ref.discard(string[left])
+            left += 1
+        ref.add(string[right])
+        max_substr = max(max_substr, (left, right), key=lambda x: x[1] - x[0] + 1)
+        
+        
+    return string[max_substr[0] : max_substr[1] + 1]
+
+print('---Longest substring without repeating characters---')
+print(longestSubstringNoDupes('abccdeaabbcddef'), 'expected cdea')
+print(longestSubstringNoDupes('abcbde'), 'expected cbde')
+print(longestSubstringNoDupes('abacacacaaabacaaaeaaafa'), 'expected bac')
