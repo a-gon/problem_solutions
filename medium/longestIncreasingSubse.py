@@ -3,8 +3,8 @@ def longestIncreasingSubseq(array):
     if len(array) <= 1:
         return array
     T = [[num] for num in array]
-    for i in range(1, len(array)):
-        for j in range(i):
+    for i in range(len(array)):
+        for j in range(i):  # check for increasing up to i-th element
             if array[j] >= array[i]:
                 continue
             T[i] = max(T[i], T[j] + [array[i]], key=lambda x: len(x))
@@ -28,7 +28,7 @@ def longestIncreasingSubsequence(array):
 		    if array[j] < array[i] and lengths[j] + 1 >= lengths[i]:
 			    lengths[i] = lengths[j] + 1
 			    sequences[i] = j
-	    if lengths[i] >= lengths[maxLenIdx]:
+	    if lengths[i] >= lengths[maxLenIdx]:  # where the longest substr ends
 		    maxLenIdx = i
 
     return buildSeqs(array, sequences, maxLenIdx)
