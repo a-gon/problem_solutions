@@ -264,8 +264,8 @@ def lca_of_3(root, node1, node2, node3):
                      10
                     /  \
                   5     12
-                 / \    /    
-                3   6  11
+                 / \    / \   
+                3   6  11  13
 """
     
 # Test Cases
@@ -288,3 +288,71 @@ print('---LCA of 3 nodes---\n')
 print(lca_of_3(tree1, tree1.left.left, tree1.left.right, tree1.right)[0].value, 'expect 10')
 print(lca_of_3(tree1, tree1.left, tree1.left.right, tree1.left.left)[0].value, 'expect 5')
 print(lca_of_3(tree1, tree1.left, tree1.right.left, tree1.right.right)[0].value, 'expect 10')
+
+
+
+def printTreeByLevelRecur(root):
+    result = []
+    def helper(nodes):
+        if not nodes:
+            return
+        next_level_nodes = []
+        cur_level = []
+        while nodes:
+            cur = nodes.pop(0)
+            cur_level.append(cur.value)
+            if cur.left:
+                next_level_nodes.append(cur.left)
+            if cur.right:
+                next_level_nodes.append(cur.right)
+        result.append(cur_level)
+        helper(next_level_nodes)
+    
+    helper([root])
+    return result
+
+tree1 = TreeNode(10, 
+                 TreeNode(5, 
+                          TreeNode(3), 
+                          TreeNode(6)), 
+                 TreeNode(12, 
+                          TreeNode(11), 
+                          TreeNode(13)))
+
+print('--- Print tree by level recursively ---')
+print(printTreeByLevelRecur(tree1))
+
+
+
+def printEveryOtherLevel(root):
+    if not root:
+        return []
+    queue = [root]
+    level = 0
+    result = []
+    while queue:
+        curLevel = []
+        for i in range(len(queue)):
+            cur = queue.pop(0)
+            if level % 2 == 0:
+                curLevel.append(cur.value)
+            if cur.left:
+                queue.append(cur.left)
+            if cur.right:
+                queue.append(cur.right)
+        level += 1
+        if curLevel:
+            result.append(curLevel)
+    
+    return result
+
+tree1 = TreeNode(10, 
+                 TreeNode(5, 
+                          TreeNode(3), 
+                          TreeNode(6)), 
+                 TreeNode(12, 
+                          TreeNode(11), 
+                          TreeNode(13)))
+
+print('--- Print tree - every other level ---')
+print(printEveryOtherLevel(tree1))
