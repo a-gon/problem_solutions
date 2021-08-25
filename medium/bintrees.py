@@ -356,3 +356,19 @@ tree1 = TreeNode(10,
 
 print('--- Print tree - every other level ---')
 print(printEveryOtherLevel(tree1))
+
+
+
+def isSubtree(self, root, subRoot) -> bool:
+    '''Check if subRoot is a subtree of root
+    '''
+    def isSameTree(r, s):
+        if not r and not s:
+            return True
+        if r and s:
+            return r.val == s.val and isSameTree(r.left, s.left) and isSameTree(r.right, s.right)
+        
+    if not root:
+        return False
+
+    return isSameTree(root, subRoot) or self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
