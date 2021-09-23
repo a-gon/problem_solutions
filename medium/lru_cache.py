@@ -96,3 +96,71 @@ class LRUCache:
 
 
 
+'''
+Implement LRU cache using DLL with a sentinel node:
+'''
+class Node:
+    def __init__(self, key = 0, val = 0, prev = None, next = None):
+        self.key = key
+        self.val = val
+        self.prev = prev
+        self.next = next
+    
+class DLList:
+    def __init__(self):
+        self.sentinel = Node(-2, -2)
+        self.sentinel.next = self.sentinel.prev = self.sentinel
+        
+    def remove(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        
+    def add(self, node):
+        node.next = self.sentinel.next
+        node.prev = self.sentinel
+        node.next.prev = node
+        self.sentinel.next = node
+    
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.cacheList = DLList()
+        self.cacheMap = {}
+        self.capacity = capacity
+
+    def get(self, key: int) -> int:
+        # print(f'get {key}')
+        if key not in self.cacheMap:
+            return -1
+        curNode = self.cacheMap[key]
+        self.cacheList.remove(curNode)   # remove from list
+        self.cacheList.add(curNode)      # always add to front
+
+        return curNode.val
+
+    def put(self, key: int, value: int) -> None:
+        # print(f'put {key}:{value}')
+        nodeToRemove = None
+        newNode = Node(key, value)
+
+
+        if key in self.cacheMap:
+            nodeToRemove = self.cacheMap[key]
+        elif len(self.cacheMap) == self.capacity:
+            nodeToRemove = self.cacheList.sentinel.prev
+            # print(f'keyToDel: {nodeToRemove.key}')
+            del self.cacheMap[nodeToRemove.key]
+        if nodeToRemove:
+            self.cacheList.remove(nodeToRemove)
+        self.cacheList.add(newNode)                         # add new node to front
+        self.cacheMap[key] = newNode
+
+        # print(self.cacheMap)
+        # print(f'head: {self.cacheList.sentinel.next.key}, tail: {self.cacheList.sentinel.prev.key}')
+
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
